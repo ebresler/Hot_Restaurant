@@ -14,7 +14,7 @@ app.use(express.json());
 
 // Star Wars Characters (DATA)
 // =============================================================
-var characters = [
+var reservations = [
   {
     reservedId: "A15",
     name: "Louis",
@@ -60,8 +60,8 @@ app.get("/viewReservation", function(req, res) {
 });
 
 // Generate all reservation info an endpoint
-app.get("/servationInfo", function(req, res) {
-  return res.json(characters);
+app.get("/reservationInfo", function(req, res) {
+  return res.json(reservations);
 });
 
 // Displays a single character, or returns false
@@ -80,21 +80,16 @@ app.get("/servationInfo", function(req, res) {
 // });
 
 // Make new reservation
-/* app.post("/api/characters", function(req, res) {
+app.post("/reservationInfo", function(req, res) {
   // req.body hosts is equal to the JSON post sent from the user
   // This works because of our body parsing middleware
-  var newcharacter = req.body;
+  var newReservation = req.body;
 
   // Using a RegEx Pattern to remove spaces from newCharacter
   // You can read more about RegEx Patterns later https://www.regexbuddy.com/regex.html
-  newcharacter.routeName = newcharacter.name.replace(/\s+/g, "").toLowerCase();
-
-  console.log(newcharacter);
-
-  characters.push(newcharacter);
-
+  reservations.push(newReservation);
   res.json(newcharacter);
-}); */
+});
 
 // Starts the server to begin listening
 // =============================================================
