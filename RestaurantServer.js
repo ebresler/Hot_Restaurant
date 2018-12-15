@@ -12,7 +12,7 @@ var PORT = process.env.PORT || 3000;
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-// Star Wars Characters (DATA)
+// Reservation and Waitlist (DATA)
 // =============================================================
 var reservations = [
   {
@@ -43,6 +43,14 @@ var reservations = [
   
 ];
 
+var waitlist = [
+  {
+    name: "Josh",
+    email: "joshmckenney@gmail.com",
+    phone: "911922933944",
+  }
+];
+
 // Routes
 // =============================================================
 
@@ -64,6 +72,11 @@ app.get("/reservationInfo", function(req, res) {
   return res.json(reservations);
 });
 
+// Generate all reservation info an endpoint
+app.get("/waitlistInfo", function(req, res) {
+  return res.json(waitlist);
+});
+
 // Displays a single character, or returns false
 // app.get("/api/characters/:character", function(req, res) {
 //   var chosen = req.params.character;
@@ -83,12 +96,16 @@ app.get("/reservationInfo", function(req, res) {
 app.post("/reservationInfo", function(req, res) {
   // req.body hosts is equal to the JSON post sent from the user
   // This works because of our body parsing middleware
-  var newReservation = req.body;
+  var newCustomer = req.body;
 
-  // Using a RegEx Pattern to remove spaces from newCharacter
-  // You can read more about RegEx Patterns later https://www.regexbuddy.com/regex.html
-  reservations.push(newReservation);
-  res.json(newcharacter);
+  if (reservations.length<5){
+    reservations.push(newCustomer);
+    console.log("New reservation added")
+  } else {
+    waitlist.push(newCustomer);
+    console.log("No more reservation spots. New customer added to waitlist")
+  }
+  res.json(newCustomer);
 });
 
 // Starts the server to begin listening
